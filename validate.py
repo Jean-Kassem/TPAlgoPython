@@ -32,3 +32,17 @@ def _is_duplicate(_array, _str):
     exist = _str in _array
     _array.append(_str)
     return exist
+
+def _check_price(sell_price, buy_price):
+
+  try:
+
+    if(isinstance(int(sell_price), int) and int(sell_price) > 0 and buy_price < sell_price):
+      flag = True    
+    else:
+      flag = False
+  except:
+    flag = False
+
+  return flag
+
