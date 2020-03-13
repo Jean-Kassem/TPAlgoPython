@@ -2,7 +2,6 @@ import re
 
 #Il y a une somme de contrôle pour l'EAN 13. Les 12 premiers chiffres sont le code et le dernier permet de faire un contrôle
 def is_ean13(_str):
-    _str = str(_str)
     #check du format (13 chiffres)
     if not re.search("[0-9]{13}", _str):
         return False
@@ -25,7 +24,7 @@ def is_ean13(_str):
 #on peut mettre un nombre indeterminé d'arguments, il faut qu'il y ait un moins un des parametres existants
 def _mandatory(*_str):
     for _s in _str:
-        if _s:
+        if _s
             return True
     return False
 
@@ -34,8 +33,6 @@ def _is_duplicate(_array, _str):
     _array.append(_str)
     return exist
 
-#On lui envoi en premier argument le prix de vente et en deuxième le prix d'achat, 
-# il retourne true si le prix de vente est bon et supérieur au prix d'achat
 def _check_price(sell_price, buy_price):
 
   try:
@@ -49,12 +46,3 @@ def _check_price(sell_price, buy_price):
 
   return flag
 
-#Check if l'argument passé est bien un entier 
-def _check_int(value):
-  try:
-    if(isinstance(int(value), int)):
-      flag = True 
-  except:
-    flag = False
-
-  return flag

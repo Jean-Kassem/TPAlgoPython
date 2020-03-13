@@ -81,6 +81,8 @@ class Out:
         out = ref_fourn if ref_fourn else ref_sap
         #Obligatoire
         is_ok = _mandatory(out)
+        #Alphanumériuqe
+        is_ok = out.isalnum() and is_ok
         #Unique
         is_ok = not _is_duplicate(Out.arr_ref_fournisseur, out) and is_ok
 
@@ -94,6 +96,8 @@ class Out:
         out = designation
         #Obligatoire
         is_ok = _mandatory(out)
+        #Alphanumérique
+        is_ok = out.isalnum() and is_ok
         #Unique
         is_ok = not _is_duplicate(Out.arr_designation, out) and is_ok
 
@@ -149,8 +153,8 @@ class Out:
         is_ok = _mandatory(out_achat)
         is_ok = _mandatory(out_vente) and is_ok 
         #numérique
-        is_ok = type(out_achat) is float and is_ok
-        is_ok = type(out_vente) is float and is_ok
+        is_ok = str(out_achat).isnumeric() and is_ok
+        is_ok = str(out_vente).isnumeric() and is_ok
         #prix de vente au dessus du prix d'achat
         is_ok = _check_price(prix_vente, prix_achat) and is_ok
 

@@ -1,5 +1,6 @@
 import ManipulateFile
 from LineSource import LineSource
+from Out import Out
 import csv
 
 #Get the source file path
@@ -31,13 +32,13 @@ if source_file != None:
                             type = Upper_first_letter_word(Get_type(line.designation))
                         if Contain_model(line.designation):
                             model = Upper_first_letter_word(Get_model(line.designation))
-                    # else:
-                    #     # TODO : Verify if line have valid data and append it to out_lines or else append it to out_error_lines
-                    #     if True:
-                    #         out_lines.append(line)
-                    #     else:
-                    #         out_error_lines.append(line)
+                    else:
+                        out = Out(line.reference_client, line.reference_sap, line.designation + " " + str(line.capacity), line.capacity, line.cnt_product_pack, line.barcode, line.buy_price, line.sell_price, "test", "test", "test")
+            if out.is_ok:
+                print(out)
                 count += 1
+            
+
 else:
     print("Impossible d'ouvrir le fichier sélectionné, veuillez ré-essayer")
 

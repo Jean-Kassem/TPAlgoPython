@@ -3,7 +3,7 @@ class LineSource:
     reference_sap = ""
     designation = ""
     capacity = -1
-    cnt_product_pack = ""
+    cnt_product_pack = -1
     buy_price = -1.0
     sell_price = -1.0
     barcode = -1
@@ -22,28 +22,24 @@ class LineSource:
                 self.designation = designation
                 if capacity.isdigit():
                     self.capacity = int(capacity)
-                self.cnt_product_pack = cnt_product_pack
-                #if buy_price.isdigit():
-                try:
-                    self.buy_price = float(buy_price.replace(",", "."))
-                #if sell_price.isdigit():
-                    self.sell_price = float(sell_price.replace(",", "."))
-                except:
-                    pass
+                if cnt_product_pack.isdigit():
+                    self.cnt_product_pack = int(cnt_product_pack)
+                if buy_price.isdigit():
+                    self.buy_price = float(buy_price)
+                if sell_price.isdigit():
+                    self.sell_price = float(sell_price)
                 if barcode.isdigit():
                     self.barcode = int(barcode)
     
     def __str__(self):
-        return (
-            self.reference_client + "," +
-            self.reference_sap + "," +
-            self.designation + "," +
-            str(self.capacity) + "," +
-            str(self.cnt_product_pack) + "," +
-            str(self.buy_price) + "," +
-            str(self.sell_price) + "," +
-            str(self.barcode) + "," +
-            str(self.is_empty) + "," +
-            str(self.is_title)
-        )
+        return (self.reference_client + ","
+               self.reference_sap + ","
+               self.designation + "," 
+               str(self.capacity) + ","
+               str(self.cnt_product_pack) + ","
+               str(self.buy_price) + ","
+               str(self.sell_price) + ","
+               str(self.barcode) + ","
+               str(self.is_empty) + ","
+               str(self.is_title))
         

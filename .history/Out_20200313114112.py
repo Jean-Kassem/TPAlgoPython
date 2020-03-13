@@ -149,8 +149,8 @@ class Out:
         is_ok = _mandatory(out_achat)
         is_ok = _mandatory(out_vente) and is_ok 
         #numérique
-        is_ok = type(out_achat) is float and is_ok
-        is_ok = type(out_vente) is float and is_ok
+        is_ok = str(out_achat).isdigit() and is_ok
+        is_ok = str(out_vente).isdigit() and is_ok
         #prix de vente au dessus du prix d'achat
         is_ok = _check_price(prix_vente, prix_achat) and is_ok
 
