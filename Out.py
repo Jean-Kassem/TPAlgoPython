@@ -36,7 +36,7 @@ class Out:
     #Numérique
     #Unique
     #EAN13
-    code_barre = 0
+    code_barre = ""
     arr_code_barre = []
 
     #6
@@ -117,9 +117,9 @@ class Out:
     
     #4
     def set_conditionnement(self, conditionnement):
-        out = conditionnement
+        out = conditionnement.replace(" ", "")
         #Numérique
-        is_ok = str(out).isalnum()
+        is_ok = True
 
         if is_ok:
             self.conditionnement = out
@@ -128,7 +128,7 @@ class Out:
 
     #5
     def set_code_barre(self, code_barre):
-        out = code_barre
+        out = str(code_barre).replace(" ", "")
         prepend = ""
         if len(str(out)) < 13:
             nbZeros = 13 - len(str(out))
@@ -143,7 +143,7 @@ class Out:
         is_ok = is_ean13(out) and is_ok
 
         if is_ok:
-            self.code_barre = code_barre
+            self.code_barre = out
         
         return is_ok
     
