@@ -3,8 +3,23 @@ from LineSource import LineSource
 from Out import Out
 import csv
 
+<<<<<<< HEAD
+#Get the source file path
+source_file_path = ManipulateFile.Select_file()
+
+#Open stream to the source file path
+source_file = ManipulateFile.Open_existing_file(source_file_path)
+source_lines = []
+out_lines = []
+out_error_lines = []
+# brand = ""
+model = ""
+type = ""
+count = 0
+=======
 # def Is_brand(index_line, lines):
 #     return False
+>>>>>>> 47d77ea010e6ab1c95c661155c3fe33ee6f1dec3
 
 def Contain_type(value = ""):
     result = False
