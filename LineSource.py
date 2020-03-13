@@ -11,7 +11,7 @@ class LineSource:
     is_title = False
 
     def __init__(self, ref_client, ref_sap, designation, capacity, cnt_product_pack, buy_price, sell_price, barcode):
-        if designation != "" or ref_client == "" or ref_sap == "" or barcode == "" or capacity == "" or cnt_product_pack == "" or buy_price == "" or sell_price == "":
+        if designation != "" or ref_client != "" or ref_sap != "" or barcode != "" or capacity != "" or cnt_product_pack != "" or buy_price != "" or sell_price != "":
             self.is_empty = False
             if designation != "" and (ref_client == "" and ref_sap == "" and barcode == "" and capacity == "" and cnt_product_pack == "" and buy_price == "" and sell_price == ""):
                 self.is_title = True

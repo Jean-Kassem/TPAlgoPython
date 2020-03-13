@@ -3,6 +3,80 @@ from LineSource import LineSource
 from Out import Out
 import csv
 
+# def Is_brand(index_line, lines):
+#     return False
+
+def Contain_type(value = ""):
+    result = False
+    checks = ["Eau de ","eau de ","EAU DE ","Eau De "]
+    index = -1
+
+    for check in checks:
+        index = int(value.find(check))
+        if index >= 0:
+            if (len(value) - index) >= 3:
+                result = True
+                break
+
+    return result
+
+def Get_type(value):
+    index = int(value.find("-"))
+
+    if index > -1:
+        if index+1 < len(value):
+            value = value[index+1:len(value)]
+        else:
+            value.replace("-", "")
+
+    return value.strip()
+
+def Contain_model(value):
+    result = True
+    checks = ["Eau de ","eau de ","EAU DE ","Eau De "]
+    test_value = value.replace(" ","").replace("-","")
+    index = -1
+
+    for check in checks:
+        index = int(test_value.find(check))
+        if index >= 0:
+            if len(test_value) - (len(test_value) - index) <= 0:
+                result = False
+                break
+
+    return result
+
+def Get_model(value):
+    index = int(value.find("-"))
+    checks = ["Eau de ","eau de ","EAU DE ","Eau De "]
+    test_value = value.replace("-", "")
+
+    for check in checks:
+        index = int(test_value.find(check))
+        if index >= 0:
+            test_value = test_value[0:index]
+
+    return test_value.strip()
+
+def Upper_first_letter_word(value):
+    need_upper = True
+    result = ""
+
+    for char in value:
+        if char.isalpha():
+            if need_upper:
+                result += char.upper()
+                need_upper = False
+            else:
+                result += char.lower()
+        elif char == " ":
+            need_upper = True
+            result += char
+        else:
+            result += char
+
+    return result.strip()
+
 #Get the source file path
 source_file_path = ManipulateFile.Select_file()
 
@@ -15,6 +89,7 @@ out_error_lines = []
 model = ""
 type = ""
 count = 0
+out = None
 
 if source_file != None:
     with source_file as source:
@@ -33,85 +108,18 @@ if source_file != None:
                         if Contain_model(line.designation) and (source_lines[count+1].is_empty == False and source_lines[count+1].is_title == False) and source_lines[count-1].is_empty == True:
                             model = Upper_first_letter_word(Get_model(line.designation))
                     else:
-                        out = Out(line.reference_client, line.reference_sap, line.designation + " " + str(line.capacity), line.capacity, line.cnt_product_pack, line.barcode, line.buy_price, line.sell_price, "test", "test", "test")
-            if out.is_ok:
-                print(out)
-                count += 1
-            
+                        out = Out(line.reference_client, line.reference_sap, Upper_first_letter_word(line.designation) + " " + str(line.capacity) + " ML", line.capacity, line.cnt_product_pack, line.barcode, line.buy_price, line.sell_price, Upper_first_letter_word("test"), Upper_first_letter_word("test"), Upper_first_letter_word("test"))
+                        if out != None:
+                            out_lines.append(out)
+                            # if out.is_ok:
+                            #     out_lines.append(out)
+                            # else:
+                            #     out_error_lines.append(out)
 
+            count += 1
+    attr = (o.designation for o in out_lines)
+
+    for val in attr:
+        print(val)
 else:
     print("Impossible d'ouvrir le fichier sélectionné, veuillez ré-essayer")
-
-# def Is_brand(index_line, lines):
-#     return False
-
-def Contain_type(value = ""):
-    result = False
-    checks = ["Eau de ","eau de ","EAU DE ","Eau De "]
-    index = -1
-
-    for check in checks:
-        index = value.find(check)
-        if index >= 0:
-            if (len(value) - index) >= 3:
-                result = True
-                break
-
-    return result
-
-def Get_type(value):
-    index = value.find("-")
-
-    if index > -1:
-        if index+1 < len(value):
-            value = value[index+1:len(value)]
-        else:
-            value.replace("-", "")
-
-    return value.strip()
-
-def Contain_model(value):
-    result = True
-    checks = ["Eau de ","eau de ","EAU DE ","Eau De "]
-    test_value = value.replace(" ","").replace("-","")
-    index = -1
-
-    for check in checks:
-        index = test_value.find(check)
-        if index >= 0:
-            if len(test_value) - (len(test_value) - index) <= 0:
-                result = False
-                break
-
-    return result
-
-def Get_model(value):
-    index = value.find("-")
-    checks = ["Eau de ","eau de ","EAU DE ","Eau De "]
-    test_value = value.replace("-", "")
-
-    for check in checks:
-        index = test_value.find(check)
-        if index >= 0:
-            test_value = test_value[0,index]
-
-    return test_value.strip()
-
-def Upper_first_letter_word(value):
-    need_upper = True
-    result = ""
-
-    for char in value:
-        if char.isalpha():
-            if need_upper:
-                result.__add__(char.upper())
-                need_upper = False
-            else:
-                result.__add__(char.lower())
-        elif char == " ":
-            need_upper = True
-            result.__add__(char)
-        else:
-            result.__add__(char)
-
-    return result
