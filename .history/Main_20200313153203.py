@@ -3,8 +3,18 @@ from LineSource import LineSource
 from Out import Out
 import csv
 
-# def Is_brand(index_line, lines):
-#     return False
+#Get the source file path
+source_file_path = ManipulateFile.Select_file()
+
+#Open stream to the source file path
+source_file = ManipulateFile.Open_existing_file(source_file_path)
+source_lines = []
+out_lines = []
+out_error_lines = []
+# brand = ""
+model = ""
+type = ""
+count = 0
 
 def Contain_type(value = ""):
     result = False
@@ -12,7 +22,7 @@ def Contain_type(value = ""):
     index = -1
 
     for check in checks:
-        index = int(value.find(check))
+        index = value.find(check)
         if index >= 0:
             if (len(value) - index) >= 3:
                 result = True
@@ -21,7 +31,7 @@ def Contain_type(value = ""):
     return result
 
 def Get_type(value):
-    index = int(value.find("-"))
+    index = value.find("-")
 
     if index > -1:
         if index+1 < len(value):
@@ -38,7 +48,7 @@ def Contain_model(value):
     index = -1
 
     for check in checks:
-        index = int(test_value.find(check))
+        index = test_value.find(check)
         if index >= 0:
             if len(test_value) - (len(test_value) - index) <= 0:
                 result = False
@@ -47,14 +57,14 @@ def Contain_model(value):
     return result
 
 def Get_model(value):
-    index = int(value.find("-"))
+    index = value.find("-")
     checks = ["Eau de ","eau de ","EAU DE ","Eau De "]
     test_value = value.replace("-", "")
 
     for check in checks:
-        index = int(test_value.find(check))
+        index = test_value.find(check)
         if index >= 0:
-            test_value = test_value[0:index]
+            test_value = test_value[0,index]
 
     return test_value.strip()
 
@@ -65,30 +75,17 @@ def Upper_first_letter_word(value):
     for char in value:
         if char.isalpha():
             if need_upper:
-                result += char.upper()
+                result.__add__(char.upper())
                 need_upper = False
             else:
-                result += char.lower()
+                result.__add__(char.lower())
         elif char == " ":
             need_upper = True
-            result += char
+            result.__add__(char)
         else:
-            result += char
-    return result.strip()
+            result.__add__(char)
 
-#Get the source file path
-source_file_path = ManipulateFile.Select_file()
-
-#Open stream to the source file path
-source_file = ManipulateFile.Open_existing_file(source_file_path)
-source_lines = []
-out_lines = []
-out_error_lines = []
-# brand = ""
-model = ""
-type = ""
-count = 0
-out = None
+    return result
 
 if source_file != None:
     with source_file as source:
@@ -107,30 +104,14 @@ if source_file != None:
                         if Contain_model(line.designation) and (source_lines[count+1].is_empty == False and source_lines[count+1].is_title == False) and source_lines[count-1].is_empty == True:
                             model = Upper_first_letter_word(Get_model(line.designation))
                     else:
-                        out = Out(line.reference_client, line.reference_sap, Upper_first_letter_word(line.designation.replace("  ", " ")) + " " + str(line.capacity) + " ML", line.capacity, line.cnt_product_pack, line.barcode, line.buy_price, line.sell_price, Upper_first_letter_word("test"), Upper_first_letter_word("test"), Upper_first_letter_word("test"))
-                        if out != None:
-                            # out_lines.append(out)
-                            if out.is_ok:
-                                out_lines.append(out)
-                            else:
-                                out_error_lines.append(out)
+                        out = Out(line.reference_client, line.reference_sap, line.designation + " " + str(line.capacity), line.capacity, line.cnt_product_pack, line.barcode, line.buy_price, line.sell_price, type, model, "test")
+                        if out.is_ok:
+                            print(out)
+                            count += 1
+            
 
-            count += 1
-    # attr = (o.designation for o in out_lines)
-    # print("valid:")
-    # for val in attr:
-    #     print(val)
-
-    # attr = (o.designation for o in out_error_lines)
-    # print("error:")
-    # for val in attr:
-    #     print(val)
-
-    print("valid:")
-    for line in out_lines:
-        print(line)
-    print("\nerror:")
-    for line in out_error_lines:
-        print(line)
 else:
     print("Impossible d'ouvrir le fichier sélectionné, veuillez ré-essayer")
+
+# def Is_brand(index_line, lines):
+#     return False

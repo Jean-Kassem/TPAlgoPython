@@ -3,8 +3,23 @@ from LineSource import LineSource
 from Out import Out
 import csv
 
+<<<<<<< HEAD
+#Get the source file path
+source_file_path = ManipulateFile.Select_file()
+
+#Open stream to the source file path
+source_file = ManipulateFile.Open_existing_file(source_file_path)
+source_lines = []
+out_lines = []
+out_error_lines = []
+# brand = ""
+model = ""
+type = ""
+count = 0
+=======
 # def Is_brand(index_line, lines):
 #     return False
+>>>>>>> 47d77ea010e6ab1c95c661155c3fe33ee6f1dec3
 
 def Contain_type(value = ""):
     result = False
@@ -107,30 +122,18 @@ if source_file != None:
                         if Contain_model(line.designation) and (source_lines[count+1].is_empty == False and source_lines[count+1].is_title == False) and source_lines[count-1].is_empty == True:
                             model = Upper_first_letter_word(Get_model(line.designation))
                     else:
-                        out = Out(line.reference_client, line.reference_sap, Upper_first_letter_word(line.designation.replace("  ", " ")) + " " + str(line.capacity) + " ML", line.capacity, line.cnt_product_pack, line.barcode, line.buy_price, line.sell_price, Upper_first_letter_word("test"), Upper_first_letter_word("test"), Upper_first_letter_word("test"))
+                        out = Out(line.reference_client, line.reference_sap, Upper_first_letter_word(line.designation) + " " + str(line.capacity) + " ML", line.capacity, line.cnt_product_pack, line.barcode, line.buy_price, line.sell_price, Upper_first_letter_word("test"), Upper_first_letter_word("test"), Upper_first_letter_word("test"))
                         if out != None:
-                            # out_lines.append(out)
-                            if out.is_ok:
-                                out_lines.append(out)
-                            else:
-                                out_error_lines.append(out)
+                            out_lines.append(out)
+                            # if out.is_ok:
+                            #     out_lines.append(out)
+                            # else:
+                            #     out_error_lines.append(out)
 
             count += 1
-    # attr = (o.designation for o in out_lines)
-    # print("valid:")
-    # for val in attr:
-    #     print(val)
+    attr = (o.designation for o in out_lines)
 
-    # attr = (o.designation for o in out_error_lines)
-    # print("error:")
-    # for val in attr:
-    #     print(val)
-
-    print("valid:")
-    for line in out_lines:
-        print(line)
-    print("\nerror:")
-    for line in out_error_lines:
-        print(line)
+    for val in attr:
+        print(val)
 else:
     print("Impossible d'ouvrir le fichier sélectionné, veuillez ré-essayer")
