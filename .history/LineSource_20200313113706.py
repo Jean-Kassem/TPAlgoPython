@@ -24,12 +24,9 @@ class LineSource:
                     self.capacity = int(capacity)
                 self.cnt_product_pack = cnt_product_pack
                 #if buy_price.isdigit():
-                try:
-                    self.buy_price = float(buy_price.replace(",", "."))
+                self.buy_price = float(buy_price.replace(",", "."))
                 #if sell_price.isdigit():
-                    self.sell_price = float(sell_price.replace(",", "."))
-                except:
-                    pass
+                self.sell_price = float(sell_price.replace(",", "."))
                 if barcode.isdigit():
                     self.barcode = int(barcode)
     
