@@ -119,7 +119,7 @@ class Out:
     def set_conditionnement(self, conditionnement):
         out = conditionnement
         #Numérique
-        is_ok = str(out).isalnum()
+        is_ok = str(out).isnumeric()
 
         if is_ok:
             self.conditionnement = out

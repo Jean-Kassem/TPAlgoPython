@@ -16,6 +16,35 @@ model = ""
 type = ""
 count = 0
 
+if source_file != None:
+    with source_file as source:
+        csv_reader = csv.reader(source, delimiter=';')
+        for row in csv_reader:
+            source_lines.append(LineSource(row[0],row[1],row[2],row[3],row[4],row[5],row[6],row[7]))
+
+        if len(source_lines) < 5:
+            print("Le fichier sélectionné contient trop peu de lignes pour être utilisé")
+        else:
+            for line in source_lines:
+                if line.is_empty == False:
+                    if line.is_title:
+                        if Contain_type(line.designation):
+                            type = Upper_first_letter_word(Get_type(line.designation))
+                        if Contain_model(line.designation) and (source_lines[count+1].is_empty == False and source_lines[count+1].is_title == False) and source_lines[count-1].is_empty == True:
+                            model = Upper_first_letter_word(Get_model(line.designation))
+                    else:
+                        out = Out(line.reference_client, line.reference_sap, line.designation + " " + str(line.capacity), line.capacity, line.cnt_product_pack, line.barcode, line.buy_price, line.sell_price, type, model, "test")
+            if out.is_ok:
+                print(out)
+                count += 1
+            
+
+else:
+    print("Impossible d'ouvrir le fichier sélectionné, veuillez ré-essayer")
+
+# def Is_brand(index_line, lines):
+#     return False
+
 def Contain_type(value = ""):
     result = False
     checks = ["Eau de ","eau de ","EAU DE ","Eau De "]
@@ -86,32 +115,3 @@ def Upper_first_letter_word(value):
             result.__add__(char)
 
     return result
-
-if source_file != None:
-    with source_file as source:
-        csv_reader = csv.reader(source, delimiter=';')
-        for row in csv_reader:
-            source_lines.append(LineSource(row[0],row[1],row[2],row[3],row[4],row[5],row[6],row[7]))
-
-        if len(source_lines) < 5:
-            print("Le fichier sélectionné contient trop peu de lignes pour être utilisé")
-        else:
-            for line in source_lines:
-                if line.is_empty == False:
-                    if line.is_title:
-                        if Contain_type(line.designation):
-                            type = Upper_first_letter_word(Get_type(line.designation))
-                        if Contain_model(line.designation) and (source_lines[count+1].is_empty == False and source_lines[count+1].is_title == False) and source_lines[count-1].is_empty == True:
-                            model = Upper_first_letter_word(Get_model(line.designation))
-                    else:
-                        out = Out(line.reference_client, line.reference_sap, line.designation + " " + str(line.capacity), line.capacity, line.cnt_product_pack, line.barcode, line.buy_price, line.sell_price, type, model, "test")
-                        if out.is_ok:
-                            print(out)
-                            count += 1
-            
-
-else:
-    print("Impossible d'ouvrir le fichier sélectionné, veuillez ré-essayer")
-
-# def Is_brand(index_line, lines):
-#     return False

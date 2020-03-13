@@ -105,9 +105,9 @@ if source_file != None:
                             model = Upper_first_letter_word(Get_model(line.designation))
                     else:
                         out = Out(line.reference_client, line.reference_sap, line.designation + " " + str(line.capacity), line.capacity, line.cnt_product_pack, line.barcode, line.buy_price, line.sell_price, type, model, "test")
-                        if out.is_ok:
-                            print(out)
-                            count += 1
+                        #if out.is_ok:
+                        print(out)
+                        count += 1
             
 
 else:
