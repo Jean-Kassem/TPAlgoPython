@@ -34,6 +34,8 @@ def _is_duplicate(_array, _str):
     _array.append(_str)
     return exist
 
+#On lui envoi en premier argument le prix de vente et en deuxième le prix d'achat, 
+# il retourne true si le prix de vente est bon et supérieur au prix d'achat
 def _check_price(sell_price, buy_price):
 
   try:
@@ -47,3 +49,12 @@ def _check_price(sell_price, buy_price):
 
   return flag
 
+#Check if l'argument passé est bien un entier 
+def _check_int(value):
+  try:
+    if(isinstance(int(value), int)):
+      flag = True 
+  except:
+    flag = False
+
+  return flag
