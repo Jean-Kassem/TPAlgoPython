@@ -134,7 +134,7 @@ class Out:
             nbZeros = 13 - len(str(out))
             for i in range(nbZeros):
                 prepend = prepend + "0"
-        out = prepend + str(out)
+        out = prepend + out
         #Obligatoire
         is_ok = _mandatory(out)
         #Unique
