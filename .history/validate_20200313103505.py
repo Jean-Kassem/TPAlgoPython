@@ -2,9 +2,8 @@ import re
 
 #Il y a une somme de contrôle pour l'EAN 13. Les 12 premiers chiffres sont le code et le dernier permet de faire un contrôle
 def is_ean13(_str):
-    _str = str(_str)
     #check du format (13 chiffres)
-    if not re.search("[0-9]{13}", _str):
+    if not re.search("[0-9]{13}", str(_str)):
         return False
     
     #calcul de la somme de controle

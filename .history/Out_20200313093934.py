@@ -1,7 +1,4 @@
-from validate import _mandatory
-from validate import _is_duplicate
-from validate import _check_price
-from validate import is_ean13
+from validate import *
 
 #Classe pour les données en sorties
 #Il y a des tableau pour checker que les valeurs sont bien uniques
@@ -61,26 +58,14 @@ class Out:
     #Obligatoire
     marque = ""
 
-    #Ligne valide ou non
-    is_ok = False
-
-    def __init__(self, ref_fournisseur, ref_sap, designation, litrage, conditionnement, code_barre, prix_achat, prix_vente, _type, modele, marque):
-        self.is_ok = self.set_ref_fournisseur(ref_fournisseur, ref_sap)
-        self.is_ok = self.set_designation(designation) and self.is_ok
-        self.is_ok = self.set_litrage(litrage) and self.is_ok
-        self.is_ok = self.set_conditionnement(conditionnement) and self.is_ok
-        self.is_ok = self.set_code_barre(code_barre) and self.is_ok
-        self.is_ok = self.set_prix(prix_achat, prix_vente) and self.is_ok
-        self.is_ok = self.set_type(_type) and self.is_ok
-        self.is_ok = self.set_modele(modele) and self.is_ok
-        self.is_ok = self.set_marque(marque) and self.is_ok
-
     #1
     def set_ref_fournisseur(self, ref_fourn, ref_sap):
         #ref sap si pas de ref fournisseur
         out = ref_fourn if ref_fourn else ref_sap
         #Obligatoire
         is_ok = _mandatory(out)
+        #Alphanumériuqe
+        is_ok = out.isalnum() and is_ok
         #Unique
         is_ok = not _is_duplicate(Out.arr_ref_fournisseur, out) and is_ok
 
@@ -94,6 +79,8 @@ class Out:
         out = designation
         #Obligatoire
         is_ok = _mandatory(out)
+        #Alphanumérique
+        is_ok = out.isalnum() and is_ok
         #Unique
         is_ok = not _is_duplicate(Out.arr_designation, out) and is_ok
 
@@ -141,7 +128,7 @@ class Out:
         
         return is_ok
     
-    #6-7
+    #6
     def set_prix(self, prix_achat, prix_vente):
         out_achat = prix_achat
         out_vente = prix_vente
@@ -159,50 +146,3 @@ class Out:
             self.prix_vente = prix_vente
         
         return is_ok
-    
-    #8
-    def set_type(self, _type):
-        out = _type
-
-        is_ok = _mandatory(_type)
-
-        if is_ok:
-            self._type = out
-
-        return is_ok
-
-    #9
-    def set_modele(self, modele):
-        out = modele
-
-        is_ok = _mandatory(modele)
-
-        if is_ok:
-            self.modele = modele
-
-        return is_ok
-
-    #10
-    def set_marque(self, marque):
-        out = marque
-
-        is_ok = _mandatory(out)
-
-        if is_ok:
-            self.marque = out
-        
-        return is_ok
-    
-    def __str__(self):
-        return (
-            str(self.ref_fournisseur) + "," +
-            str(self.designation) + "," +
-            str(self.litrage) + "," +
-            str(self.conditionnement) + "," +
-            str(self.code_barre) + "," +
-            str(self.prix_achat) + "," +
-            str(self.prix_vente) + "," +
-            str(self._type) + "," +
-            str(self.modele) + "," +
-            str(self.marque)
-        )

@@ -1,6 +1,5 @@
 import ManipulateFile
 from LineSource import LineSource
-from Out import Out
 import csv
 
 #Get the source file path
@@ -20,9 +19,8 @@ if source_file != None:
         
         for source_line in source_lines:
             sl = source_line
-            out = Out(sl.reference_client, sl.reference_sap, sl.designation + " " + str(sl.capacity), sl.capacity, sl.cnt_product_pack, sl.barcode, sl.buy_price, sl.sell_price, "test", "test", "test")
-            if out.is_ok:
-                print(out)
+            out = Out(sl.reference_client, sl.reference_sap, sl.designation, sl.capacity, sl.cnt_product_pack, sl.barcode, sl.buy_price, sl.sell_price, "", "", "")
+            print(out)
 
 else:
     print("Impossible d'ouvrir le fichier sélectionné, veuillez ré-essayer")

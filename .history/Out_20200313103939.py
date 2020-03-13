@@ -81,6 +81,8 @@ class Out:
         out = ref_fourn if ref_fourn else ref_sap
         #Obligatoire
         is_ok = _mandatory(out)
+        #Alphanumériuqe
+        is_ok = out.isalnum() and is_ok
         #Unique
         is_ok = not _is_duplicate(Out.arr_ref_fournisseur, out) and is_ok
 
@@ -94,6 +96,8 @@ class Out:
         out = designation
         #Obligatoire
         is_ok = _mandatory(out)
+        #Alphanumérique
+        is_ok = out.isalnum() and is_ok
         #Unique
         is_ok = not _is_duplicate(Out.arr_designation, out) and is_ok
 
