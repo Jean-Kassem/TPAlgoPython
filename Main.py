@@ -30,7 +30,7 @@ if source_file != None:
                     if line.is_title:
                         if Contain_type(line.designation):
                             type = Upper_first_letter_word(Get_type(line.designation))
-                        if Contain_model(line.designation):
+                        if Contain_model(line.designation) and (source_lines[count+1].is_empty == False and source_lines[count+1].is_title == False) and source_lines[count-1].is_empty == True:
                             model = Upper_first_letter_word(Get_model(line.designation))
                     else:
                         out = Out(line.reference_client, line.reference_sap, line.designation + " " + str(line.capacity), line.capacity, line.cnt_product_pack, line.barcode, line.buy_price, line.sell_price, "test", "test", "test")
