@@ -33,15 +33,15 @@ class LineSource:
     
     def __str__(self):
         return (
-            self.reference_client + "," +
-            self.reference_sap + "," +
-            self.designation + "," +
-            str(self.capacity) + "," +
-            str(self.cnt_product_pack) + "," +
-            str(self.buy_price) + "," +
-            str(self.sell_price) + "," +
-            str(self.barcode) + "," +
-            str(self.is_empty) + "," +
+            self.reference_client + ","
+            self.reference_sap + ","
+            self.designation + "," 
+            str(self.capacity) + ","
+            str(self.cnt_product_pack) + ","
+            str(self.buy_price) + ","
+            str(self.sell_price) + ","
+            str(self.barcode) + ","
+            str(self.is_empty) + ","
             str(self.is_title)
         )
         

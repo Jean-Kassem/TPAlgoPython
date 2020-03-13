@@ -16,7 +16,6 @@ if source_file != None:
         for row in csv_reader:
             source_lines.append(LineSource(row[0],row[1],row[2],row[3],row[4],row[5],row[6],row[7]))
         
-        for source_line in source_lines:
-            print(source_line)
+        print(source_lines)
 else:
     print("Impossible d'ouvrir le fichier sélectionné, veuillez ré-essayer")
